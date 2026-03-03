@@ -7,9 +7,8 @@
   </head>
   <body>
     <script>
-      let id, title, director;
-      let year, rating;
       let choice;
+
       let genres = [
         "Action",
         "Drama",
@@ -18,10 +17,11 @@
         "Horror",
         "Thriller",
       ];
+
       let watchlist = [
         {
           id: "M01",
-          tilte: "Inception",
+          title: "Inception",
           director: "Christopher Nolan",
           genre: "Action",
           year: 2001,
@@ -29,133 +29,250 @@
         },
         {
           id: "M02",
-          tilte: "Inception",
-          director: "Christopher Nolan",
-          genre: "Action",
-          year: 2002,
-          rating: 8.0,
+          title: "Parasite",
+          director: "Bong Joon-ho",
+          genre: "Drama",
+          year: 2019,
+          rating: 8.6,
         },
         {
           id: "M03",
-          tilte: "Inception",
+          title: "The Dark Knight",
           director: "Christopher Nolan",
           genre: "Action",
-          year: 2003,
-          rating: 8.0,
+          year: 2008,
+          rating: 9.0,
         },
         {
           id: "M04",
-          tilte: "Inception",
-          director: "Christopher Nolan",
-          genre: "Action",
-          year: 2004,
-          rating: 8.0,
+          title: "The Godfather",
+          director: "Francis Ford Coppola",
+          genre: "Drama",
+          year: 1972,
+          rating: 9.2,
         },
         {
           id: "M05",
-          tilte: "Inception",
-          director: "Christopher Nolan",
-          genre: "Action",
-          year: 2005,
+          title: "Get Out",
+          director: "Jordan Peele",
+          genre: "Horror",
+          year: 2017,
           rating: 8.0,
         },
       ];
+
       function showWatchlist() {
-        console.log("Danh sách phim", watchlist);
+        console.log("===== DANH SÁCH PHIM =====");
+        watchlist.forEach((movie) => {
+          console.log(
+            `${movie.id} | ${movie.title} | ${movie.director} | ${movie.genre} | ${movie.year} | ${movie.rating}/10`,
+          );
+        });
       }
+
       function addWatchfilm() {
         let id = prompt("Nhập id của phim: ");
-        if (id == watchlist.id) {
-          console.log("ID đã tồn tại, vui lòng chọn ID khác: ");
-        } else {
-          id.watchlist.push;
+
+        if (watchlist.some((movie) => movie.id === id)) {
+          console.log("ID đã tồn tại, vui lòng chọn ID khác.");
+          return;
         }
+
         let title = prompt("Nhập tên phim: ");
-        let director = prompt("Nhập tên tác giả: ");
-        if (tilte == watchlist.tilte && director == watchlist.director) {
+        let director = prompt("Nhập tên đạo diễn: ");
+
+        if (
+          watchlist.some(
+            (movie) =>
+              movie.title.toLowerCase() === title.toLowerCase() &&
+              movie.director.toLowerCase() === director.toLowerCase(),
+          )
+        ) {
           console.log("Phim này đã có trong watchlist.");
+          return;
         }
-        let year = prompt("Nhập năm phát hành của phim: ");
-        if (year < 1900 && year > 2026) {
-          console.log("Năm phát hnahf không hợp lệ!");
+
+        let year = Number(prompt("Nhập năm phát hành: "));
+        let currentYear = new Date().getFullYear();
+
+        if (!Number.isInteger(year) || year < 1900 || year > currentYear + 5) {
+          console.log("Năm phát hành phải từ 1900 đến " + (currentYear + 5));
+          return;
         }
-        let genre = prompt("Nhập thể loại của phim: ");
-        if (genre !== genres) {
-          console.log("Thể loại không hợp lệ! Vui lòng nhập lại:");
+
+        let genre = prompt("Nhập thể loại: ");
+        if (!genres.includes(genre)) {
+          console.log("Thể loại không hợp lệ!");
+          return;
         }
+
+        let rating = Number(prompt("Nhập rating (1.0 - 10.0): "));
+        if (isNaN(rating) || rating < 1 || rating > 10) {
+          console.log("Điểm rating phải từ 1.0 đến 10.0.");
+          return;
+        }
+
+        watchlist.push({ id, title, director, genre, year, rating });
+        console.log(`Đã thêm phim: ${title} (${year}) vào watchlist!`);
       }
+
       function deleteWatchfilm() {
-        let titleDelete = prompt("Nhập tên phim muốn xoá");
-        if (titleDelete !== watchlist.title) {
-          console.log("Phim ", titleDelete, "không có trong watchlist");
+        let titleDelete = prompt("Nhập tên phim muốn xoá: ");
+
+        let index = watchlist.findIndex(
+          (movie) => movie.title.toLowerCase() === titleDelete.toLowerCase(),
+        );
+
+        if (index === -1) {
+          console.log("Phim " + titleDelete + " không có trong watchlist.");
+          return;
+        }
+
+        let confirmDelete = confirm("Bạn có chắc muốn xoá không?");
+        if (confirmDelete) {
+          watchlist.splice(index, 1);
+          console.log("Đã xoá phim " + titleDelete + " thành công!");
         } else {
+          console.log("Đã huỷ thao tác xoá.");
         }
       }
 
       function updateWatchfilm() {
         let titleUpdate = prompt("Nhập tên phim cần cập nhật: ");
-        if (titleUpdate !== watchlist.tilte) {
-          console.log("Phim", titleUpdate, "không có trong watchlist!");
-        } else {
+
+        let movie = watchlist.find(
+          (m) => m.title.toLowerCase() === titleUpdate.toLowerCase(),
+        );
+
+        if (!movie) {
+          console.log("Phim " + titleUpdate + " không có trong watchlist!");
+          return;
         }
+
+        let newRating = Number(
+          prompt("Nhập rating mới (bỏ trống nếu không đổi): "),
+        );
+        if (!isNaN(newRating)) {
+          if (newRating < 1 || newRating > 10) {
+            console.log("Điểm rating phải từ 1.0 đến 10.0.");
+            return;
+          }
+          movie.rating = newRating;
+        }
+
+        let newGenre = prompt("Nhập genre mới (bỏ trống nếu không đổi): ");
+        if (newGenre) {
+          if (!genres.includes(newGenre)) {
+            console.log("Thể loại không hợp lệ!");
+            return;
+          }
+          movie.genre = newGenre;
+        }
+
+        console.log(
+          "Đã cập nhật phim: " + movie.title + " (" + movie.year + ")",
+        );
       }
+
       function searchWatchfilm() {
-        let nameFilm = prompt("Nhập tên phim cần tìm");
-        if (nameFilm == watchlist.title) {
-          console.log("Phim cần tìm là:");
+        let nameFilm = prompt("Nhập tên phim cần tìm: ");
+
+        let movie = watchlist.find(
+          (m) => m.title.toLowerCase() === nameFilm.toLowerCase(),
+        );
+
+        if (!movie) {
+          console.log("Không tìm thấy phim nào có tiêu đề " + nameFilm);
+        } else {
+          console.log(
+            `Phim tìm thấy: ${movie.title} - Đạo diễn: ${movie.director}, Thể loại: ${movie.genre}, Năm: ${movie.year}, Rating: ${movie.rating}/10`,
+          );
         }
       }
+
+      function filterByGenre() {
+        let genreInput = prompt("Nhập thể loại cần lọc: ");
+
+        if (!genres.includes(genreInput)) {
+          console.log("Thể loại không hợp lệ!");
+          return;
+        }
+
+        let movies = watchlist.filter((m) => m.genre === genreInput);
+
+        if (movies.length === 0) {
+          console.log("Hiện tại chưa có phim thể loại " + genreInput);
+        } else {
+          movies.forEach((m) => {
+            console.log(`${m.title} | ${m.year} | ${m.rating}/10`);
+          });
+        }
+      }
+
+      function averageRating() {
+        if (watchlist.length === 0) return;
+
+        let total = watchlist.reduce((sum, m) => sum + m.rating, 0);
+        let avg = (total / watchlist.length).toFixed(1);
+
+        console.log(
+          `Điểm trung bình watchlist: ${avg}/10 (số lượng phim: ${watchlist.length}).`,
+        );
+      }
+
       do {
         choice = prompt(`
-                   *** Quản lý danh sách phim yêu thích *** \n
-            1. Khởi tạo watchlist
-            2. Thêm phim
-            3. Xóa phim
-            4. Hiển thị danh sách watchlist
-            5. Cập nhật thông tin phim
-            6. Tìm phim
-            7. Lọc phim theo thể loại
-            8. Tính điểm trung bình watchlist
-            9. Sắp xếp watchlist theo năm phát hành
-            10. Phân tích mức độ "cổ điển" vs "hiện đại" trong watchlist
-            0. Thoát
-            Nhập lựa chọn:
-            `);
+*** QUẢN LÝ DANH SÁCH PHIM ***
+1. Hiển thị watchlist
+2. Thêm phim
+3. Xóa phim
+4. Hiển thị danh sách
+5. Cập nhật phim
+6. Tìm phim
+7. Lọc theo thể loại
+8. Tính điểm trung bình
+9. Sắp xếp watchlist theo năm phát hành
+10. Phân tích mức độ "cổ điển" vs "hiện đại" trong watchlist
+0. Thoát
+Nhập lựa chọn:
+        `);
+
         switch (choice) {
-          case 1:
+          case "1":
             showWatchlist();
             break;
-          case 2:
+          case "2":
             addWatchfilm();
             break;
-          case 3:
+          case "3":
             deleteWatchfilm();
             break;
-          case 4:
+          case "4":
             showWatchlist();
             break;
-          case 5:
+          case "5":
             updateWatchfilm();
             break;
-          case 6:
+          case "6":
             searchWatchfilm();
             break;
-          case 7:
+          case "7":
+            filterByGenre();
             break;
-          case 8:
+          case "8":
+            averageRating();
             break;
-          case 9:
+          case "9":
             break;
-          case 10:
+          case "10":
             break;
-          case 0:
+          case "0":
             console.log("Thoát chương trình!");
             break;
           default:
             console.log("Lựa chọn không hợp lệ!");
-            break;
         }
-      } while (choice);
+      } while (choice !== "0");
     </script>
   </body>
 </html>
