@@ -99,6 +99,12 @@
         } else {
         }
       }
+      function searchWatchfilm() {
+        let nameFilm = prompt("Nhập tên phim cần tìm");
+        if (nameFilm == watchlist.title) {
+          console.log("Phim cần tìm là:");
+        }
+      }
       do {
         choice = prompt(`
                    *** Quản lý danh sách phim yêu thích *** \n
@@ -132,6 +138,7 @@
             updateWatchfilm();
             break;
           case 6:
+            searchWatchfilm();
             break;
           case 7:
             break;
