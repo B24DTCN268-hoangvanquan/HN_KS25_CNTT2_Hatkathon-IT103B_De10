@@ -94,6 +94,10 @@
 
       function updateWatchfilm() {
         let titleUpdate = prompt("Nhập tên phim cần cập nhật: ");
+        if (titleUpdate !== watchlist.tilte) {
+          console.log("Phim", titleUpdate, "không có trong watchlist!");
+        } else {
+        }
       }
       do {
         choice = prompt(`
@@ -119,10 +123,13 @@
             addWatchfilm();
             break;
           case 3:
+            deleteWatchfilm();
             break;
           case 4:
+            showWatchlist();
             break;
           case 5:
+            updateWatchfilm();
             break;
           case 6:
             break;
