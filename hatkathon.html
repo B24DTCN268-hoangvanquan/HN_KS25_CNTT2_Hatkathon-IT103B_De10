@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      let id, title, director;
+      let year, rating;
+      let choice;
+      let genres = [
+        "Action",
+        "Drama",
+        "Sci-Fi",
+        "Comedy",
+        "Horror",
+        "Thriller",
+      ];
+      let watchlist = [
+        {
+          id: "M01",
+          tilte: "Inception",
+          director: "Christopher Nolan",
+          genre: "Action",
+          year: 2001,
+          rating: 8.0,
+        },
+        {
+          id: "M02",
+          tilte: "Inception",
+          director: "Christopher Nolan",
+          genre: "Action",
+          year: 2002,
+          rating: 8.0,
+        },
+        {
+          id: "M03",
+          tilte: "Inception",
+          director: "Christopher Nolan",
+          genre: "Action",
+          year: 2003,
+          rating: 8.0,
+        },
+        {
+          id: "M04",
+          tilte: "Inception",
+          director: "Christopher Nolan",
+          genre: "Action",
+          year: 2004,
+          rating: 8.0,
+        },
+        {
+          id: "M05",
+          tilte: "Inception",
+          director: "Christopher Nolan",
+          genre: "Action",
+          year: 2005,
+          rating: 8.0,
+        },
+      ];
+      function showWatchlist() {
+        console.log("Danh sách phim", watchlist);
+      }
+      function addWatchfilm() {
+        let id = prompt("Nhập id của phim: ");
+        if (id == watchlist.id) {
+          console.log("ID đã tồn tại, vui lòng chọn ID khác: ");
+        } else {
+          id.watchlist.push;
+        }
+        let title = prompt("Nhập tên phim: ");
+        let director = prompt("Nhập tên tác giả: ");
+        if (tilte == watchlist.tilte && director == watchlist.director) {
+          console.log("Phim này đã có trong watchlist.");
+        }
+        let year = prompt("Nhập năm phát hành của phim: ");
+        if (year < 1900 && year > 2026) {
+          console.log("Năm phát hnahf không hợp lệ!");
+        }
+        let genre = prompt("Nhập thể loại của phim: ");
+        if (genre !== genres) {
+          console.log("Thể loại không hợp lệ! Vui lòng nhập lại:");
+        }
+      }
+      function deleteWatchfilm() {
+        let titleDelete = prompt("Nhập tên phim muốn xoá");
+        if (titleDelete !== watchlist.title) {
+          console.log("Phim ", titleDelete, "không có trong watchlist");
+        } else {
+        }
+      }
+
+      function updateWatchfilm() {
+        let titleUpdate = prompt("Nhập tên phim cần cập nhật: ");
+      }
+      do {
+        choice = prompt(`
+                   *** Quản lý danh sách phim yêu thích *** \n
+            1. Khởi tạo watchlist
+            2. Thêm phim
+            3. Xóa phim
+            4. Hiển thị danh sách watchlist
+            5. Cập nhật thông tin phim
+            6. Tìm phim
+            7. Lọc phim theo thể loại
+            8. Tính điểm trung bình watchlist
+            9. Sắp xếp watchlist theo năm phát hành
+            10. Phân tích mức độ "cổ điển" vs "hiện đại" trong watchlist
+            0. Thoát
+            Nhập lựa chọn:
+            `);
+        switch (choice) {
+          case 1:
+            showWatchlist();
+            break;
+          case 2:
+            addWatchfilm();
+            break;
+          case 3:
+            break;
+          case 4:
+            break;
+          case 5:
+            break;
+          case 6:
+            break;
+          case 7:
+            break;
+          case 8:
+            break;
+          case 9:
+            break;
+          case 10:
+            break;
+          case 0:
+            console.log("Thoát chương trình!");
+            break;
+          default:
+            console.log("Lựa chọn không hợp lệ!");
+            break;
+        }
+      } while (choice);
+    </script>
+  </body>
+</html>
